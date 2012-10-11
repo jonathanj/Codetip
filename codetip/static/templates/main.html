@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/x-template" id="paste-controls-template">
+            <div class="paste-controls">
+                <h1><a href="https://github.com/jonathanj/Codetip">codetip</a></h1>
+                <button class="js-savePaste" title="Save paste" data-shortcut="ctrl+s"><i class="icon-save" /></button>
+                <button class="js-newPaste" title="New paste" data-shortcut="ctrl+n"><i class="icon-pencil" /></button>
+            </div>
+        </script>
+
+        <script type="text/x-template" id="new-paste-template">
+            <div class="new-paste">
+                <div class="textarea-hax">
+                    <textarea class="mousetrap" spellcheck="false" placeholder="Paste your text here"></textarea>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/x-template" id="paste-template">
+            <div class="paste">
+                <div class="line-numbers"></div>
+                <pre><code><%= highlightedContent %></code></pre>
+            </div>
+        </script>
+
+        <script type="text/javascript" src="static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="static/js/underscore-min.js"></script>
+        <script type="text/javascript" src="static/js/backbone-min.js"></script>
+        <script type="text/javascript" src="static/js/highlight.min.js"></script>
+        <script type="text/javascript" src="static/js/mousetrap.min.js"></script>
+        <link rel="stylesheet" href="/static/styles/codetip.css">
+        <link rel="stylesheet" href="/static/styles/solarized_dark.css">
+        <link rel="stylesheet" href="/static/styles/font-awesome.css">
+
+        <meta name="robots" content="noindex,nofollow"/>
+
+        <title>codetip</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/javascript" src="/static/js/codetip.js"></script>
+    </body>
+</html>

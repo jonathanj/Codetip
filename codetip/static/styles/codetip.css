@@ -1,0 +1,162 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #002b36;
+    color: #839496;
+}
+
+#app {
+    height: 100%;
+    position: relative;
+}
+
+.paste,
+.textarea-hax {
+    padding: 2em;
+}
+
+.textarea-hax,
+.new-paste {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.new-paste textarea,
+.line-numbers,
+.paste pre code {
+    background: transparent;
+    font-size: 13px;
+    font-family: "Monaco", "Consolas", monospace;
+}
+
+.new-paste textarea {
+    display: block;
+    color: #fff;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    resize: none;
+}
+
+.new-paste textarea::-webkit-input-placeholder {
+    color: #839496;
+    text-align: center;
+}
+
+.new-paste textarea:-moz-placeholder {
+    color: #839496;
+    text-align: center;
+}
+
+.paste {
+    position: relative;
+    display: table;
+}
+
+.line-numbers,
+.paste pre code {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+
+.paste pre {
+    margin: 0;
+    padding-left: 0.75em;
+}
+
+.line-numbers {
+    text-align: right;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+
+    padding-right: 0.75em;
+    border-right: 1px solid rgba(75, 75, 75, 0.5);
+}
+
+.paste-controls {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    opacity: 0.35;
+
+    margin-top: -1.5em;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+}
+
+.paste-controls:hover {
+    opacity: 1;
+    margin-top: 0;
+}
+
+.paste-controls h1 {
+    font-family: "Palatino", "Georgia", serif;
+    font-size: 1.5em;
+    font-weight: normal;
+    color: #aaa;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 1em 0 0;
+    padding: 0;
+}
+
+.paste-controls h1 a,
+.paste-controls h1 a:link,
+.paste-controls h1 a:visited {
+    color: #aaa;
+    text-decoration: none;
+}
+
+.paste-controls h1 a:hover {
+    color: #fff;
+}
+
+.paste-controls button {
+    font-family: "FontAwesome";
+    font-size: 1.5em;
+    height: 2em;
+    width: 2em;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+    background: transparent;
+    color: #fff;
+    outline: none;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 1em;
+    margin: 0.25em 0.5em 0.25em 0;
+}
+
+.paste-controls button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    text-shadow: 0 0.1em #570a00;
+    border: 1px solid #fff;
+}
+
+.paste-controls button[disabled],
+.paste-controls button[disabled]:hover {
+    opacity: 0.25;
+    background: transparent;
+    border: none;
+    cursor: default;
+    text-shadow: none;
+}
