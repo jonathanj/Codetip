@@ -159,27 +159,10 @@
 
     function PasteView() {
       this.highlightContent = __bind(this.highlightContent, this);
-      this.renderLineNumbers = __bind(this.renderLineNumbers, this);
       PasteView.__super__.constructor.apply(this, arguments);
     }
 
     PasteView.prototype.template = _.template($('#paste-template').html());
-
-    /*
-        Render the line numbers elements for the paste content.
-    */
-
-    PasteView.prototype.renderLineNumbers = function(content) {
-      var i, node, numLines, _results;
-      node = this.$('.line-numbers');
-      node.empty();
-      numLines = content.split('\n').length;
-      _results = [];
-      for (i = 1; 1 <= numLines ? i <= numLines : i >= numLines; 1 <= numLines ? i++ : i--) {
-        _results.push(node.append($('<div>').text(i.toString())));
-      }
-      return _results;
-    };
 
     /*
         Perform syntax highlighting on the paste content.
@@ -199,14 +182,28 @@
       return highlight;
     };
 
+    /*
+        Add line numbers to content.
+    */
+
+    PasteView.prototype.lineNumbers = function(content) {
+      var line, lines, result, _i, _len;
+      lines = content.split('\n');
+      result = $('<div>');
+      for (_i = 0, _len = lines.length; _i < _len; _i++) {
+        line = lines[_i];
+        result.append($('<span>').html(line + '\n').addClass('line'));
+      }
+      return result.html();
+    };
+
     PasteView.prototype.render = function() {
       var controls, data, highlight;
       window.app.setWindowTitle(this.model.get('name'));
       data = this.model.toJSON();
       highlight = this.highlightContent(data.content, this.model.get('languageHint'));
-      data.highlightedContent = highlight.value;
+      data.highlightedContent = this.lineNumbers(highlight.value);
       this.$el.html(this.template(data));
-      this.renderLineNumbers(data.content);
       controls = new PasteControls({
         model: this.model
       });

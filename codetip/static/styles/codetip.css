@@ -14,7 +14,6 @@ body {
     position: relative;
 }
 
-.paste,
 .textarea-hax {
     padding: 2em;
 }
@@ -29,11 +28,15 @@ body {
 }
 
 .new-paste textarea,
-.line-numbers,
-.paste pre code {
+.paste pre {
     background: transparent;
     font-size: 13px;
     font-family: "Monaco", "Consolas", monospace;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
 }
 
 .new-paste textarea {
@@ -57,33 +60,12 @@ body {
 }
 
 .paste {
-    position: relative;
-    display: table;
-}
-
-.line-numbers,
-.paste pre code {
-    display: table-cell;
-    margin: 0;
-    padding: 0;
+    padding: 2em 0;
 }
 
 .paste pre {
     margin: 0;
-    padding-left: 0.75em;
-}
-
-.line-numbers {
-    text-align: right;
-    -webkit-user-select: none; /* Chrome/Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */
-    /* Rules below not implemented in browsers yet */
-    -o-user-select: none;
-    user-select: none;
-
-    padding-right: 0.75em;
-    border-right: 1px solid rgba(75, 75, 75, 0.5);
+    padding-left: 0.5em;
 }
 
 .paste-controls {
@@ -159,4 +141,44 @@ body {
     border: none;
     cursor: default;
     text-shadow: none;
+}
+
+.line-numbers {
+    counter-reset: linenumber;
+    margin: 0 3em;
+}
+
+.line-numbers .line {
+    position: relative;
+    display: block;
+    padding-left: 0.75em;
+}
+
+.line-numbers .line:before {
+    content: counter(linenumber);
+    counter-increment: linenumber;
+    position: absolute;
+    left: -4.5em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 4.5em;
+    text-align: right;
+    padding-right: 0.75em;
+    background: rgba(75, 75, 75, 0.25);
+    height: 100%;
+}
+
+.line-numbers .line:nth-child(10n):before {
+    color: #ddd;
+}
+
+.line-numbers .line:before,
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
