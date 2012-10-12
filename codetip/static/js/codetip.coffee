@@ -99,17 +99,6 @@ class PasteView extends Backbone.View
 
 
     ###
-    Render the line numbers elements for the paste content.
-    ###
-    renderLineNumbers: (content) =>
-        node = @$('.line-numbers')
-        node.empty()
-        numLines = content.split('\n').length
-        for i in [1..numLines]
-            node.append $('<div>').text(i.toString())
-
-
-    ###
     Perform syntax highlighting on the paste content.
     ###
     highlightContent: (content, lang) =>
@@ -123,13 +112,26 @@ class PasteView extends Backbone.View
         return highlight
 
 
+    ###
+    Add line numbers to content.
+    ###
+    lineNumbers: (content) ->
+        lines = content.split '\n'
+        result = $('<div>')
+        for line in lines
+            #if not line.length
+            #    line = '&nbsp;'
+            result.append(
+                $('<span>').html(line + '\n').addClass('line'))
+        return result.html()
+
+
     render: ->
         window.app.setWindowTitle @model.get 'name'
         data = @model.toJSON()
         highlight = @highlightContent data.content, @model.get 'languageHint'
-        data.highlightedContent = highlight.value
+        data.highlightedContent = @lineNumbers highlight.value
         @$el.html @template data
-        @renderLineNumbers data.content
 
         controls = new PasteControls
             model: @model

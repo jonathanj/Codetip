@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <script type="text/x-template" id="paste-controls-template">
-            <div class="paste-controls">
+            <div class="paste-controls unselectable">
                 <h1><a href="https://github.com/jonathanj/Codetip">codetip</a></h1>
                 <button class="js-savePaste" title="Save paste" data-shortcut="ctrl+s"><i class="icon-save" /></button>
                 <button class="js-newPaste" title="New paste" data-shortcut="ctrl+n"><i class="icon-pencil" /></button>
@@ -19,8 +19,9 @@
 
         <script type="text/x-template" id="paste-template">
             <div class="paste">
-                <div class="line-numbers"></div>
-                <pre><code><%= highlightedContent %></code></pre>
+                <div class="line-numbers">
+                    <pre class="syntax-highlight"><%= highlightedContent %></pre>
+                </div>
             </div>
         </script>
 
