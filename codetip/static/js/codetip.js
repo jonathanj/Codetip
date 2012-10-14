@@ -70,7 +70,11 @@
         _this.bindings[funcName] = shortcut;
         title = el.prop('title');
         el.prop('title', "" + title + " [" + shortcut + "]");
-        return Mousetrap.bind(shortcut, _this[funcName]);
+        return Mousetrap.bind(shortcut, function(event) {
+          event = $.event.fix(event);
+          event.preventDefault();
+          return _this[funcName](event);
+        });
       });
       return this.delegateEvents();
     };
