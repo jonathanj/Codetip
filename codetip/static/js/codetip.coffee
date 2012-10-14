@@ -39,7 +39,10 @@ class PasteControls extends Backbone.View
             @bindings[funcName] = shortcut
             title = el.prop 'title'
             el.prop 'title', "#{ title } [#{ shortcut }]"
-            Mousetrap.bind shortcut, @[funcName]
+            Mousetrap.bind shortcut, (event) =>
+                event= $.event.fix event
+                event.preventDefault()
+                @[funcName](event)
         @delegateEvents()
 
 
