@@ -78,6 +78,11 @@ class PasteControls extends Backbone.View
                 trigger: true
 
 
+    rawPaste: =>
+        window.location = "/raw/#{ @model.id }"
+
+
+
 
 class NewPasteView extends Backbone.View
     template: _.template $('#new-paste-template').html()

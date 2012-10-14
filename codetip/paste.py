@@ -35,3 +35,11 @@ class Paste(Item):
         attrs = dict(self.persistentValues())
         attrs['id'] = attrs['name']
         return json.dumps(attrs, default=jsonSerialize)
+
+
+    @classmethod
+    def findByName(cls, store, name):
+        """
+        Get a L{Paste} item by name.
+        """
+        return store.findUnique(Paste, Paste.name == name)
