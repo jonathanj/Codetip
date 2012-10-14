@@ -29,6 +29,7 @@ class RootResource(Resource):
         self.putChild('static', File(staticDir.path, defaultType='text/plain'))
         self.putChild('', MainResource(store))
         self.putChild('api', APIResource(store))
+        self.putChild('raw', RawResource(store))
 
 
     def getChild(self, path, request):
@@ -54,6 +55,25 @@ class MainResource(Resource):
     def render_GET(self, request):
         data = staticDir.child('templates').child('main.html').getContent()
         return Data(data, 'text/html; charset=UTF-8').render_GET(request)
+
+
+
+class RawResource(Resource):
+    """
+    Raw paste content resource.
+    """
+    def __init__(self, store):
+        self.store = store
+        Resource.__init__(self)
+
+
+    def getChild(self, path, request):
+        try:
+            paste = Paste.findByName(self.store, path.decode('ascii'))
+        except ItemNotFound:
+            return NoResource('No such paste')
+        else:
+            return Data(paste.content.encode('utf-8'), 'text/plain; charset=UTF-8')
 
 
 

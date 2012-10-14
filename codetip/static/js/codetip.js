@@ -37,6 +37,7 @@
     __extends(PasteControls, Backbone.View);
 
     function PasteControls() {
+      this.rawPaste = __bind(this.rawPaste, this);
       this.savePaste = __bind(this.savePaste, this);
       this.newPaste = __bind(this.newPaste, this);
       this.attachActions = __bind(this.attachActions, this);
@@ -122,6 +123,10 @@
           trigger: true
         });
       });
+    };
+
+    PasteControls.prototype.rawPaste = function() {
+      return window.location = "/raw/" + this.model.id;
     };
 
     return PasteControls;
