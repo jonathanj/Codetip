@@ -93,26 +93,18 @@ class PastesAPIResource(Resource):
         return u''.join(itertools.islice(self.chain, n))
 
 
-    def getPaste(self, name):
-        """
-        Get a L{Paste} item by name.
-        """
-        return self.store.findUnique(Paste, Paste.name == name)
-
-
     def render_POST(self, request):
         data = json.load(request.content)
         p = Paste(
             store=self.store,
             name=self.generateName(),
             **data)
-        print p.toJSON()
         return p.toJSON()
 
 
     def getChild(self, path, request):
         try:
-            paste = self.getPaste(path.decode('ascii'))
+            paste = Paste.findByName(self.store, path.decode('ascii'))
         except ItemNotFound:
             return NoResource('No such paste')
         else:
