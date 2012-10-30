@@ -13,7 +13,7 @@ from codetip.markov import japaneseChain
 
 
 
-staticDir = FilePath(__file__).sibling('static')
+staticDir = FilePath(__file__).parent().sibling('static')
 
 
 

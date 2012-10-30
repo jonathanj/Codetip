@@ -1,3 +1,5 @@
+# import ["mousetrap", "highlight-min", "backbone", "underscore", "jquery"]
+
 class Paste extends Backbone.Model
     urlRoot: '/api/pastes'
 
@@ -127,8 +129,10 @@ class PasteView extends Backbone.View
         lines = content.split '\n'
         result = $('<div>')
         for line in lines
-            #if not line.length
-            #    line = '&nbsp;'
+            # Safari on iOS renders line numbers strangely if the line has no
+            # actual content.
+            if not line.length
+                line = '&nbsp;'
             result.append(
                 $('<span>').html(line + '\n').addClass('line'))
         return result.html()

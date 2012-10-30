@@ -1,3 +1,0 @@
-#/bin/sh
-coffee -c codetip/static/js/codetip.coffee &&
-twistd -noy codetip.tac

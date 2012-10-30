@@ -1,0 +1,200 @@
+// import ["solarized_dark.css", "font-awesome.css"]
+
+$VENDORS = webkit moz o ms official
+
+$BACKGROUND = #002b36
+$FOREGROUND = #839496
+
+crossVendorProperty(property, args...)
+    for vendor in $VENDORS
+        if vendor == official
+            {property}: args
+        else
+            -{vendor}-{property}: args
+
+border-radius()
+    crossVendorProperty('border-radius', arguments)
+
+box-sizing()
+    crossVendorProperty('box-sizing', arguments)
+
+unselectable()
+    -webkit-touch-callout: none;
+    crossVendorProperty('user-select', none)
+
+transition()
+    crossVendorProperty('transition', arguments)
+
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    background: $BACKGROUND;
+    color: $FOREGROUND;
+}
+
+#app {
+    height: 100%;
+    position: relative;
+}
+
+.textarea-hax {
+    padding: 2em;
+}
+
+.textarea-hax,
+.new-paste {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.new-paste textarea,
+.paste pre {
+    background: transparent;
+    font-family: "Monaco", "Consolas", monospace;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.new-paste textarea {
+    display: block;
+    color: #fff;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    resize: none;
+
+    &::-webkit-input-placeholder {
+        color: $FOREGROUND;
+        text-align: center;
+    }
+
+    &:-moz-placeholder {
+        color: $FOREGROUND;
+        text-align: center;
+    }
+
+}
+
+.paste {
+    padding: 2em 0;
+
+    pre {
+        margin: 0;
+        padding-left: 0.5em;
+    }
+}
+
+.paste-controls {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    opacity: 0.35;
+    margin-top: -1.5em;
+    transition: all 0.25s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+        margin-top: 0;
+    }
+
+    h1 {
+        font-family: "Palatino", "Georgia", serif;
+        font-size: 1.5em;
+        font-weight: normal;
+        color: #aaa;
+        vertical-align: middle;
+        display: inline-block;
+        margin: 0 1em 0 0;
+        padding: 0;
+
+        a, a:link, a:visited {
+            color: #aaa;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+    }
+
+    button {
+        font-family: "FontAwesome";
+        font-size: 1.5em;
+        height: 2em;
+        width: 2em;
+        padding: 0;
+        margin: 0;
+        vertical-align: middle;
+        background: transparent;
+        color: #fff;
+        outline: none;
+        border: none;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 1em;
+        margin: 0.25em 0.5em 0.25em 0;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.25);
+            text-shadow: 0 0.1em #570a00;
+            border: 1px solid #fff;
+        }
+
+        &[disabled],
+        &[disabled]:hover {
+            opacity: 0.25;
+            background: transparent;
+            border: none;
+            cursor: default;
+            text-shadow: none;
+        }
+    }
+}
+
+.line-numbers {
+    counter-reset: linenumber;
+    margin: 0 3em;
+
+    .line {
+        position: relative;
+        display: block;
+        padding-left: 0.75em;
+
+        &:before {
+            content: counter(linenumber);
+            counter-increment: linenumber;
+            position: absolute;
+            left: -4.5em;
+            box-sizing: border-box;
+            width: 4.5em;
+            text-align: right;
+            padding-right: 0.75em;
+            background: rgba(75, 75, 75, 0.25);
+            height: 100%;
+        }
+
+        &:nth-child(10n):before {
+            color: #ddd;
+        }
+    }
+}
+
+.line-numbers .line:before,
+.unselectable {
+    unselectable()
+}
