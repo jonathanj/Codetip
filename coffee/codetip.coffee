@@ -1,3 +1,5 @@
+# import ["mousetrap", "highlight-min", "backbone", "underscore", "jquery"]
+
 class Paste extends Backbone.Model
     urlRoot: '/api/pastes'
 
