@@ -4,6 +4,7 @@ $VENDORS = webkit moz o ms official
 
 $BACKGROUND = #002b36
 $FOREGROUND = #839496
+$BODY_FONT_SIZE = 13px
 
 crossVendorProperty(property, args...)
     for vendor in $VENDORS
@@ -31,7 +32,7 @@ html, body {
 }
 
 body {
-    font-size: 13px;
+    font-size: $BODY_FONT_SIZE;
     margin: 0;
     padding: 0;
     background: $BACKGROUND;
@@ -60,6 +61,7 @@ body {
 .paste pre {
     background: transparent;
     font-family: "Monaco", "Consolas", monospace;
+    font-size: $BODY_FONT_SIZE;
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
     white-space: -pre-wrap;
