@@ -200,3 +200,18 @@ body {
 .unselectable {
     unselectable()
 }
+
+// Tablet.
+@media (min-width: 768px) and (max-width: 1024px) {
+    .paste-controls {
+        margin-top: 0;
+    }
+}
+
+// Phone.
+@media (max-width: 767px) {
+    .paste-controls {
+        top: auto;
+        bottom: 0;
+    }
+}
