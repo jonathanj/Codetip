@@ -31,6 +31,7 @@ pip-log.txt
 
 # Misc.
 *.log
+dropin.cache
 
 _cache
 static/css
