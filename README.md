@@ -4,20 +4,20 @@ Codetip is a [hastebin](http://hastebin.com) clone written in Twisted Web with B
 
 ## Installing
 
-    # Clone Codetip repo
+    # Clone Codetip repo.
     $ git clone http://github.com/jonathanj/Codetip
 
-    # Install Python dependencies
+    # Install Python dependencies.
     $ pip install Twisted Epsilon Axiom
 
-    # Install Brewer.js
+    # Install Brewer.js.
     $ npm install brewer
 
-    # Install dependencies for sucessfully building the Brewfile
+    # Install dependencies for sucessfully building the Brewfile.
     $ brake install
 
-    # Build assets
+    # Build assets.
     $ brake all
 
-    # Start a Codetip instance.
-    $ twistd -no web --notracebacks --class=codetip.resource.RootResource
+    # Start a Codetip instance with Google Analytics tracking.
+    $ twistd -n codetip --notracebacks --dbdir=codetip.axiom --tracking-id='YOUR-TRACKING-ID'

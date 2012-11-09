@@ -1,5 +1,10 @@
 # import ["mousetrap", "highlight-min", "backbone", "underscore", "jquery"]
 
+_.templateSettings =
+    interpolate: /\{\{(.+?)\}\}/g
+
+
+
 class Paste extends Backbone.Model
     urlRoot: '/api/pastes'
 

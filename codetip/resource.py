@@ -6,6 +6,8 @@ from axiom.errors import ItemNotFound
 
 from twisted.web.resource import Resource, NoResource
 from twisted.web.static import File, Data
+from twisted.web.template import Element, renderer, XMLFile, flattenString
+from twisted.web.util import DeferredResource
 from twisted.python.filepath import FilePath
 
 from codetip.paste import Paste
@@ -21,40 +23,63 @@ class RootResource(Resource):
     """
     Root Codetip resource.
     """
-    def __init__(self, store=None):
+    def __init__(self, store=None, trackingID=None):
         if store is None:
             store = Store('codetip.axiom')
         self.store = store
+        self.trackingID = trackingID
         Resource.__init__(self)
         self.putChild('static', File(staticDir.path, defaultType='text/plain'))
-        self.putChild('', MainResource(store))
+        self.putChild('', MainResource(store=store, trackingID=self.trackingID))
         self.putChild('api', APIResource(store))
         self.putChild('raw', RawResource(store))
 
 
     def getChild(self, path, request):
-        return MainResource(self.store)
+        return MainResource(store=self.store, trackingID=self.trackingID)
+
+
+
+class MainElement(Element):
+    """
+    Main Codetip view.
+
+    This element renders I{main.html} template, and lets everything happen from
+    the client side.
+    """
+    loader = XMLFile(staticDir.child('templates').child('main.html'))
+
+
+    def __init__(self, trackingID):
+        self.trackingID = trackingID
+        super(MainElement, self).__init__()
+
+
+    @renderer
+    def googleAnalytics(self, req, tag):
+        if self.trackingID is None:
+            return []
+        return tag.fillSlots(trackingID=self.trackingID)
 
 
 
 class MainResource(Resource):
     """
     Main Codetip resource.
-
-    This resource just serves up the I{main.html} template, and lets everything
-    happen from the client side.
     """
     isLeaf = True
 
 
-    def __init__(self, store):
+    def __init__(self, store, trackingID):
         self.store = store
+        self.trackingID = trackingID
         Resource.__init__(self)
 
 
     def render_GET(self, request):
-        data = staticDir.child('templates').child('main.html').getContent()
-        return Data(data, 'text/html; charset=UTF-8').render_GET(request)
+        d = flattenString(request, MainElement(self.trackingID))
+        d.addCallback(Data, 'text/html')
+        return DeferredResource(d).render(request)
 
 
 

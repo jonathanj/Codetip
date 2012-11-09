@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
     <head>
-        <meta name="robots" content="noindex,nofollow"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="noindex,nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
 
         <script type="text/x-template" id="paste-controls-template">
             <div class="paste-controls unselectable">
@@ -24,15 +25,28 @@
         <script type="text/x-template" id="paste-template">
             <div class="paste">
                 <div class="line-numbers">
-                    <pre class="syntax-highlight"><%= highlightedContent %></pre>
+                    <pre class="syntax-highlight">{{ highlightedContent }}</pre>
                 </div>
             </div>
+        </script>
+
+        <script type="text/javascript" t:render="googleAnalytics">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', '<t:slot name="trackingID" />']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
         </script>
 
         <link rel="apple-touch-icon" href="/static/images/codetip-touch.png" />
         <link rel="icon" href="/static/images/codetip.ico" sizes="16x16 32x32 48x48" type="image/vnd.microsoft.icon" />
         <link rel="icon" href="/static/images/codetip.svg" sizes="any" type="image/svg+xml" />
-        <link rel="stylesheet" href="/static/css/codetip.min.css">
+
+        <link rel="stylesheet" href="/static/css/codetip.min.css" />
         <title>codetip</title>
     </head>
     <body>
