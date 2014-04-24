@@ -153,7 +153,7 @@ class PastesAPIResource(Resource):
         # * mithrandi picks "6 days" out of a musical hat
         # <k4y> what's it playing?
         # <mithrandi> DJ Shadow - Six Days
-        expiryDate = Time() + timedelta(days=6)
+        expiryDate = p.created + timedelta(days=6)
         self._scheduler.schedule(p, expiryDate)
         return p
 
