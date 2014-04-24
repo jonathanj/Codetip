@@ -3,7 +3,7 @@ from twisted.internet import reactor
 from zope.interface import implements
 
 from twisted.application import strports
-from twisted.application.service import IServiceMaker
+from twisted.application.service import IService, IServiceMaker
 from twisted.plugin import IPlugin
 from twisted.python import usage
 from twisted.web.server import Site
@@ -33,10 +33,15 @@ class CodetipServiceMaker(object):
 
 
     def makeService(self, options):
+        store = Store(options['dbdir'])
+        siteService = IService(store)
+
         site = Site(
-            RootResource(store=Store(options['dbdir']),
+            RootResource(store=store,
                          trackingID=options['tracking-id']))
         site.displayTracebacks = not options['notracebacks']
-        return strports.service(options['port'], site, reactor=reactor)
+        siteService.addService(
+            strports.service(options['port'], site, reactor=reactor))
+        return siteService
 
 serviceMaker = CodetipServiceMaker()

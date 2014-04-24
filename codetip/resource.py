@@ -1,6 +1,10 @@
 import json
 import itertools
+from datetime import timedelta
 
+from epsilon.extime import Time
+
+from axiom.iaxiom import IScheduler
 from axiom.store import Store
 from axiom.errors import ItemNotFound
 
@@ -121,12 +125,13 @@ class PastesAPIResource(Resource):
     attribute.
     """
     def __init__(self, store):
-        self.store = store
-        self.chain = japaneseChain()
+        self._store = store
+        self._scheduler = IScheduler(self._store)
+        self._chain = japaneseChain()
         Resource.__init__(self)
 
 
-    def generateName(self, n=8):
+    def _generateName(self, n=8):
         """
         Generate a paste name.
 
@@ -135,21 +140,32 @@ class PastesAPIResource(Resource):
 
         @rtype: L{unicode}
         """
-        return u''.join(itertools.islice(self.chain, n))
+        return u''.join(itertools.islice(self._chain, n))
+
+
+    def _createPaste(self, content, languageHint=None):
+        p = Paste(
+            store=self._store,
+            name=self._generateName(),
+            content=content,
+            languageHint=languageHint)
+        # <k4y> so what's a good paste lifetime?
+        # * mithrandi picks "6 days" out of a musical hat
+        # <k4y> what's it playing?
+        # <mithrandi> DJ Shadow - Six Days
+        expiryDate = Time() + timedelta(days=6)
+        self._scheduler.schedule(p, expiryDate)
+        return p
 
 
     def render_POST(self, request):
         data = json.load(request.content)
-        p = Paste(
-            store=self.store,
-            name=self.generateName(),
-            **data)
-        return p.toJSON()
+        return self._createPaste(**data).toJSON()
 
 
     def getChild(self, path, request):
         try:
-            paste = Paste.findByName(self.store, path.decode('ascii'))
+            paste = Paste.findByName(self._store, path.decode('ascii'))
         except ItemNotFound:
             return NoResource('No such paste')
         else:

@@ -28,6 +28,10 @@ class Paste(Item):
     content = text(allowNone=False, doc=u'Paste content')
 
 
+    def run(self):
+        self.deleteFromStore()
+
+
     def toJSON(self):
         """
         Describe the L{Paste} item as I{JSON}.
