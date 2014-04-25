@@ -2,8 +2,6 @@ import json
 import itertools
 from datetime import timedelta
 
-from epsilon.extime import Time
-
 from axiom.iaxiom import IScheduler
 from axiom.store import Store
 from axiom.errors import ItemNotFound
